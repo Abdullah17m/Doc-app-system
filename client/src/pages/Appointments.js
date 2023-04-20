@@ -27,10 +27,7 @@ function Appointments() {
     }
   };
   const columns = [
-    {
-        title: "Id",
-        dataIndex: "_id",
-    },
+    
     {
       title: "Doctor",
       dataIndex: "name",
@@ -46,6 +43,15 @@ function Appointments() {
       render: (text, record) => (
         <span>
           {record.doctorInfo.phoneNumber} 
+        </span>
+      ),
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      render: (text, record) => (
+        <span>
+          {record.doctorInfo.address} 
         </span>
       ),
     },

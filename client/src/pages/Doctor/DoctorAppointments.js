@@ -53,10 +53,7 @@ function DoctorAppointments() {
     }
   };
   const columns = [
-    {
-      title: "Id",
-      dataIndex: "_id",
-    },
+   
     {
       title: "Patient",
       dataIndex: "name",

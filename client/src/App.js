@@ -16,6 +16,9 @@ import Profile from "./pages/Doctor/Profile";
 import BookAppointment from "./pages/BookAppointment";
 import Appointments from "./pages/Appointments";
 import DoctorAppointments from "./pages/Doctor/DoctorAppointments";
+import LandingPage from "./pages/LandingPage";
+import DocRegister from "./pages/DocRegister";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -28,6 +31,14 @@ function App() {
       )}
       <Toaster position="top-center" reverseOrder={false} />
       <Routes>
+      <Route
+          path="/home"
+          element={
+            <PublicRoute>
+              <LandingPage />
+            </PublicRoute>
+          }
+        />
         <Route
           path="/login"
           element={
@@ -94,6 +105,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/profile/:userId"
+          element={
+            <ProtectedRoute>
+              <UserProfile />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="/book-appointment/:doctorId"
@@ -120,6 +139,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+          <Route
+                path="/doctor/register"
+                element={
+                  <PublicRoute>
+                    <DocRegister />
+                  </PublicRoute>
+                  }
+              />
       </Routes>
     </BrowserRouter>
   );

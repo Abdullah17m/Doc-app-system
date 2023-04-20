@@ -142,8 +142,8 @@ function BookAppointment() {
                 {doctor.feePerCunsultation}
               </p>
               <p>
-                <b>Website : </b>
-                {doctor.website}
+                <b>Specialization : </b>
+                {doctor.specialization}
               </p>
               <div className="d-flex flex-column pt-2 mt-2">
                 <DatePicker
@@ -161,20 +161,20 @@ function BookAppointment() {
                     setTime(moment(value).format("HH:mm"));
                   }}
                 />
-              {!isAvailable &&   <Button
-                  className="primary-button mt-3 full-width-button"
+              {!isAvailable &&   <button
+                  className="btn btn-primary"
                   onClick={checkAvailability}
                 >
                   Check Availability
-                </Button>}
+                </button>}
 
                 {isAvailable && (
-                  <Button
-                    className="primary-button mt-3 full-width-button"
+                  <button
+                  className="btn btn-primary"
                     onClick={bookNow}
                   >
                     Book Now
-                  </Button>
+                  </button>
                 )}
               </div>
             </Col>

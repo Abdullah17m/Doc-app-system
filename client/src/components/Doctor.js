@@ -13,6 +13,10 @@ function Doctor({ doctor }) {
       </h1>
       <hr />
       <p>
+        <b>Specialization : </b>
+        {doctor.specialization}
+      </p>
+      <p>
         <b>Phone Number : </b>
         {doctor.phoneNumber}
       </p>
@@ -27,6 +31,11 @@ function Doctor({ doctor }) {
       <p>
         <b>Timings : </b>
         {doctor.timings[0]} - {doctor.timings[1]}
+      </p>
+      <p>
+      <button className="btn btn-primary" type="submit">
+          Book Now
+        </button>
       </p>
     </div>
   );

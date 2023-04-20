@@ -22,13 +22,13 @@ function Layout({ children }) {
       icon: "ri-file-list-line",
     },
     {
-      name: "Apply Doctor",
-      path: "/apply-doctor",
-      icon: "ri-hospital-line",
+      name: "Profile",
+      path: `/profile/${user?._id}`,
+      icon: "ri-user-line",
     }
   ];
 
-  const doctorMenu = [
+ const preMenu = [
     {
       name: "Home",
       path: "/",
@@ -39,12 +39,41 @@ function Layout({ children }) {
       path: "/doctor/appointments",
       icon: "ri-file-list-line",
     },
+    
+    {
+      name: "Apply Doctor",
+      path: "/apply-doctor",
+      icon: "ri-hospital-line",
+    },
+
     {
       name: "Profile",
       path: `/doctor/profile/${user?._id}`,
       icon: "ri-user-line",
     },
   ];
+   const postMenu = [
+    {
+      name: "Home",
+      path: "/",
+      icon: "ri-home-line",
+    },
+    {
+      name: "Appointments",
+      path: "/doctor/appointments",
+      icon: "ri-file-list-line",
+    },
+    
+ 
+
+    {
+      name: "Profile",
+      path: `/doctor/profile/${user?._id}`,
+      icon: "ri-user-line",
+    },
+  ];
+
+  const doctorMenu = user?.isDoctor ? postMenu : preMenu
 
   const adminMenu = [
     {
@@ -64,20 +93,18 @@ function Layout({ children }) {
     },
     {
       name: "Profile",
-      path: "/profile",
+      path: `/profile/${user?._id}`,
       icon: "ri-user-line",
     },
   ];
 
-  const menuToBeRendered = user?.isAdmin ? adminMenu : user?.isDoctor ? doctorMenu : userMenu;
-  const role = user?.isAdmin ? "Admin" : user?.isDoctor ? "Doctor" : "User";
+  const menuToBeRendered = user?.isAdmin ? adminMenu: user?.registeredAsDoctor ? doctorMenu: userMenu;
   return (
     <div className="main">
       <div className="d-flex layout">
         <div className="sidebar">
           <div className="sidebar-header">
-            <h1 className="logo">SH</h1>
-            <h1 className="role">{role}</h1>
+            <h1 className="logo">MediCare</h1>
           </div>
 
           <div className="menu">

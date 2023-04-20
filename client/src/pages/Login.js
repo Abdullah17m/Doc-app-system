@@ -14,6 +14,8 @@ function Login() {
     try {
       dispatch(showLoading());
       const response = await axios.post("/api/user/login", values);
+      window.location.reload();
+
       dispatch(hideLoading());
       if (response.data.success) {
         toast.success(response.data.message);
@@ -29,6 +31,13 @@ function Login() {
   };
 
   return (
+    <>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
     <div className="form-container ">
       <Form
         layout="vertical"
@@ -51,6 +60,7 @@ function Login() {
         </button>
       </Form>
     </div>
+    </>
   );
 }
 

@@ -1,6 +1,7 @@
-import { Button, Col, Form, Input, Row, TimePicker } from "antd";
+import { Button, Col, Form, Input, Row, TimePicker, Upload } from "antd";
 import moment from "moment";
 import React from "react";
+
 
 function DoctorForm({ onFinish, initivalValues }) {
   return (
@@ -54,7 +55,7 @@ function DoctorForm({ onFinish, initivalValues }) {
             required
             label="Website"
             name="website"
-            rules={[{ required: true }]}
+            rules={[{ required: false }]}
           >
             <Input placeholder="Website" />
           </Form.Item>
@@ -111,6 +112,16 @@ function DoctorForm({ onFinish, initivalValues }) {
             rules={[{ required: true }]}
           >
             <TimePicker.RangePicker format="HH:mm" />
+          </Form.Item>
+        </Col>
+        <Col span={8} xs={24} sm={24} lg={8}>
+          <Form.Item
+          label="Upload"
+          name="upload"
+          rules={[{ required: false }]}
+          >
+            {/* <input type="file">Upload</input> */}
+            <Input placeholder="Upload" type="file" />
           </Form.Item>
         </Col>
       </Row>

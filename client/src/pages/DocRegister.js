@@ -27,33 +27,31 @@ function DocRegister() {
   };
 
   return (
-    <div className="authentication">
-      <div className="authentication-form card p-3">
-        <h1 className="card-title">Nice To Meet U</h1>
-        <Form layout="vertical" onFinish={onFinish}>
+    <div className="form-container ">
+        <Form
+          layout="vertical"
+          onFinish={onFinish}
+          className="register-form"
+        >
+          <h3 className="text-center">Register From</h3>
           <Form.Item label="Name" name="name">
-            <Input placeholder="Name" />
+            <Input type="text" required />
           </Form.Item>
           <Form.Item label="Email" name="email">
-            <Input placeholder="Email" />
+            <Input type="email" required />
           </Form.Item>
           <Form.Item label="Password" name="password">
-            <Input placeholder="Password" type="password" />
+            <Input type="password" required />
           </Form.Item>
-
-          <Button
-            className="primary-button my-2 full-width-button"
-            htmlType="submit"
-          >
-            REGISTER
-          </Button>
-
-          <Link to="/login" className="anchor mt-2">
-            CLICK HERE TO LOGIN
+          <Link to="/login" className="m-2">
+            Already Doctor login here
           </Link>
+         
+          <button className="btn btn-primary" type="submit">
+            Register
+          </button>
         </Form>
       </div>
-    </div>
   );
 }
 

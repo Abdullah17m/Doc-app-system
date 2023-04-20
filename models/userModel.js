@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    number:{
+      type: String,
+      required:false
+    },
     isDoctor: {
       type: Boolean,
       default: false,

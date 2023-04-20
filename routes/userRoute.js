@@ -85,14 +85,17 @@ router.post("/get-user-info-by-id", authMiddleware, async (req, res) => {
 
 router.post("/apply-doctor-account", authMiddleware, async (req, res) => {
   try {
-    const newdoctor = new Doctor({ ...req.body, status: "pending" });
+    const newdoctor = new Doctor({ ...req.body });
     await newdoctor.save();
+    const user = await User.findOne({ _id: newdoctor.userId });
+    user.isDoctor = true;
+    await user.save();
     const adminUser = await User.findOne({ isAdmin: true });
-
+    
     const unseenNotifications = adminUser.unseenNotifications;
     unseenNotifications.push({
-      type: "new-doctor-request",
-      message: `${newdoctor.firstName} ${newdoctor.lastName} has applied for a doctor account`,
+      type: "new-doctor-registered",
+      message: `${newdoctor.firstName} ${newdoctor.lastName} has registered for a doctor account`,
       data: {
         doctorId: newdoctor._id,
         name: newdoctor.firstName + " " + newdoctor.lastName,
@@ -102,7 +105,7 @@ router.post("/apply-doctor-account", authMiddleware, async (req, res) => {
     await User.findByIdAndUpdate(adminUser._id, { unseenNotifications });
     res.status(200).send({
       success: true,
-      message: "Doctor account applied successfully",
+      message: "Doctor account registered successfully",
     });
   } catch (error) {
     console.log(error);
@@ -219,22 +222,37 @@ router.post("/check-booking-avilability", authMiddleware, async (req, res) => {
       .toISOString();
     const toTime = moment(req.body.time, "HH:mm").add(1, "hours").toISOString();
     const doctorId = req.body.doctorId;
-    const appointments = await Appointment.find({
-      doctorId,
-      date,
-      time: { $gte: fromTime, $lte: toTime },
-    });
-    if (appointments.length > 0) {
+    const doctor = await Doctor.findById(doctorId)
+    const docStartTime = moment(doctor.timings[0],"HH:mm").toISOString();
+    const docEndTime = moment(doctor.timings[1],"HH:mm").toISOString();
+
+    if(fromTime >= docStartTime && toTime<=docEndTime){
+      const appointments = await Appointment.find({
+        doctorId,
+        date,
+        
+        time: { $gte: fromTime, $lte: toTime },
+      });
+      if (appointments.length > 0) {
+        return res.status(200).send({
+          message: "Appointments not available",
+          success: false,
+        });
+      } else {
+        return res.status(200).send({
+          message: "Appointments available",
+          success: true,
+        });
+      }
+    }
+    else{
       return res.status(200).send({
         message: "Appointments not available",
         success: false,
       });
-    } else {
-      return res.status(200).send({
-        message: "Appointments available",
-        success: true,
-      });
     }
+
+   
   } catch (error) {
     console.log(error);
     res.status(500).send({
@@ -260,6 +278,21 @@ router.get("/get-appointments-by-user-id", authMiddleware, async (req, res) => {
       success: false,
       error,
     });
+  }
+});
+
+router.post("/get-user-info-by-id", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.body.userId });
+    res.status(200).send({
+      success: true,
+      message: "user info fetched successfully",
+      data: user,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: "Error getting user info", success: false, error });
   }
 });
 module.exports = router;
